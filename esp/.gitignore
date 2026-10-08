@@ -1,0 +1,3 @@
+test/host/test_klog
+test/host/test_klog.lint
+test/host/klog.o

@@ -2,6 +2,22 @@
 
 Clientes oficiales para la ingesta REST (`POST /v1/ingest/{tenantId}/events`).
 
+Un solo repositorio, orquestado con Turborepo. Cada lenguaje sigue usando su herramienta; la raíz solo encadena lint, test y build.
+
+```bash
+npm install
+npm run check
+```
+
+| Comando | Qué hace |
+|---------|----------|
+| `npm run lint` | Tipos en TypeScript, `gofmt` + `go vet`, Ruff, `php -l`, compilación Java y ESP con `-Werror` |
+| `npm run test` | Vitest, `go test`, pytest, PHPUnit, JUnit y las pruebas host de ESP |
+| `npm run build` | `tsc`, `go build`, `compileall`, `composer validate`, `mvn package` y el objeto C |
+| `npm run check` | Las tres tareas, en ese orden por paquete |
+
+Hace falta Node 22 (sirve 18+), Go 1.22, Python 3.10, PHP 8.1, Java 17 y gcc. Python usa `.venv` si existe (`python3 -m venv .venv && .venv/bin/python -m pip install -e ".[dev]"`); si no, `python3`. PHP pide `composer install` en su carpeta. El pipeline de git es `.github/workflows/ci.yml`; no publica paquetes.
+
 | Carpeta | Lenguaje / plataforma | Paquetes |
 |---------|----------------------|----------|
 | [`javascript/`](javascript/) | Node 18+ y navegador | `@klog/sdk-node`, `@klog/sdk-web` |

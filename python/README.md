@@ -1,7 +1,8 @@
 # kLog SDK para Python
 
 ```bash
-pip install -e .
+python3 -m venv .venv
+.venv/bin/python -m pip install -e .
 ```
 
 ```python

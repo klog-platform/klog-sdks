@@ -8,7 +8,10 @@ Biblioteca C/C++ de ingesta REST para ESP32. Misma API pública para:
 ```bash
 # Pruebas host (sin hardware): requieren gcc
 make -C test/host test
+make -C test/host lint
 ```
+
+La raíz del repo también corre `lint`, `test` y `build` con `npm run check`.
 
 No usa GraphQL. El token no debe imprimirse en logs.
 

@@ -1,0 +1,10 @@
+{
+  "name": "@klog/sdk-esp",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "make -C test/host lint",
+    "test": "make -C test/host test",
+    "build": "make -C test/host build"
+  }
+}

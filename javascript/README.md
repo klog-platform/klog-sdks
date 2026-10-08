@@ -13,6 +13,7 @@ Clientes JavaScript para enviar eventos a la API de ingesta de kLog.
 ## Quick start (Node)
 
 ```bash
+cd ..   # raíz del repo sdks, si aún no instalaste
 npm install
 npm run build
 ```
@@ -36,13 +37,15 @@ Variables de ejemplo: [`.env.example`](.env.example).
 
 ## Arranque del monorepo
 
+Instala en la raíz del repo `sdks`:
+
 ```bash
+cd ..
 npm install
-npm run build
-npm test
+npm run check
 ```
 
-Node ≥18. Workspaces en `packages/*`.
+Node ≥18. `@klog/sdk-core`, `@klog/sdk-node` y `@klog/sdk-web` son workspaces de esa raíz. Para correr solo JavaScript: `npx turbo run lint test build --filter=@klog/sdk-core --filter=@klog/sdk-node --filter=@klog/sdk-web`.
 
 ## Publicación y versionado
 

@@ -10,11 +10,14 @@ Bibliotecas JavaScript para la ingesta REST. GraphQL y la consola no viven aquí
 
 ## Arranque
 
+Desde la raíz del repo `sdks`:
+
 ```bash
 npm install
-npm run build
-npm test
+npm run check
 ```
+
+Solo estos paquetes: `npx turbo run lint test build --filter=@klog/sdk-core --filter=@klog/sdk-node --filter=@klog/sdk-web`.
 
 Los esquemas del evento viven en `packages/core/src/domain/ingest.ts`.
 

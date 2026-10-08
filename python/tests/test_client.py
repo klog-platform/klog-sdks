@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from typing import ClassVar
 
 import pytest
 
@@ -10,12 +11,12 @@ from klog_sdk import Client, Config, HTTPError
 
 
 class _Handler(BaseHTTPRequestHandler):
-    responses: list[tuple[int, bytes]] = []
+    responses: ClassVar[list[tuple[int, bytes]]] = []
     calls = 0
     last_body: dict | None = None
     last_auth: str | None = None
 
-    def do_POST(self) -> None:  # noqa: N802
+    def do_POST(self) -> None:
         type(self).calls += 1
         length = int(self.headers.get("Content-Length", "0"))
         raw = self.rfile.read(length)
@@ -27,7 +28,7 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def log_message(self, format: str, *args) -> None:  # noqa: A003
+    def log_message(self, format: str, *args) -> None:
         return
 
 

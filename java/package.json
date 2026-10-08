@@ -1,0 +1,10 @@
+{
+  "name": "@klog/sdk-java",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "mvn -B -q -DskipTests compile",
+    "test": "mvn -B -q test",
+    "build": "mvn -B -q -DskipTests package"
+  }
+}

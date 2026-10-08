@@ -1,0 +1,91 @@
+name: ci
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  quality:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: javascript
+            runtime: node
+            filters: --filter=@klog/sdk-core --filter=@klog/sdk-node --filter=@klog/sdk-web
+          - name: go
+            runtime: go
+            filters: --filter=@klog/sdk-go
+          - name: python
+            runtime: python
+            filters: --filter=@klog/sdk-python
+          - name: php
+            runtime: php
+            filters: --filter=@klog/sdk-php
+          - name: java
+            runtime: java
+            filters: --filter=@klog/sdk-java
+          - name: esp
+            runtime: esp
+            filters: --filter=@klog/sdk-esp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - uses: actions/setup-go@v5
+        if: matrix.runtime == 'go'
+        with:
+          go-version-file: go/go.mod
+
+      - uses: actions/setup-python@v5
+        if: matrix.runtime == 'python'
+        with:
+          python-version: "3.12"
+
+      - uses: shivammathur/setup-php@v2
+        if: matrix.runtime == 'php'
+        with:
+          php-version: "8.3"
+          extensions: curl, json
+          coverage: none
+
+      - uses: actions/setup-java@v4
+        if: matrix.runtime == 'java'
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Instalar dependencias del monorepo
+        run: npm ci
+
+      - name: Instalar dependencias Python
+        if: matrix.runtime == 'python'
+        working-directory: python
+        run: python -m pip install -e ".[dev]"
+
+      - name: Instalar dependencias PHP
+        if: matrix.runtime == 'php'
+        working-directory: php
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Lint, test y build
+        run: npx turbo run lint test build ${{ matrix.filters }}

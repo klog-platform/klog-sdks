@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": ["dist/**"]
+    },
+    "@klog/sdk-java#build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": ["target/**"]
+    },
+    "@klog/sdk-esp#build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": ["test/host/klog.o"]
+    },
+    "@klog/sdk-go#build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": []
+    },
+    "@klog/sdk-php#build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": []
+    },
+    "@klog/sdk-python#build": {
+      "dependsOn": ["lint", "^build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@klog/sdk-go",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "sh scripts/lint.sh",
+    "test": "go test ./...",
+    "build": "go build ./..."
+  }
+}

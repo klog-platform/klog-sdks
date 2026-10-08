@@ -1,0 +1,10 @@
+{
+  "name": "@klog/sdk-python",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "sh scripts/py.sh ruff check src tests",
+    "test": "sh scripts/py.sh pytest",
+    "build": "sh scripts/py.sh compileall -q src"
+  }
+}

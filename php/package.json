@@ -1,0 +1,10 @@
+{
+  "name": "@klog/sdk-php",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "find src tests examples -name '*.php' -print0 | xargs -0 -n1 php -l",
+    "test": "composer test",
+    "build": "composer validate --strict --no-check-publish"
+  }
+}

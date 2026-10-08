@@ -16,30 +16,30 @@ import (
 
 // Config configura el cliente de ingesta. El token no debe registrarse en logs.
 type Config struct {
-	BaseURL       string
-	TenantID      string
-	Token         string
-	ApplicationID string
-	DefaultTags   []string
-	DefaultLevel  string
-	HTTPClient    *http.Client
-	MaxRetries    int
-	Timeout       time.Duration
-	MaxQueueSize  int
+	BaseURL        string
+	TenantID       string
+	Token          string
+	ApplicationID  string
+	DefaultTags    []string
+	DefaultLevel   string
+	HTTPClient     *http.Client
+	MaxRetries     int
+	Timeout        time.Duration
+	MaxQueueSize   int
 	MaxConcurrency int
-	OnDropped     func(id string)
-	OnOverflow    func(Entry)
-	OnError       func(error)
+	OnDropped      func(id string)
+	OnOverflow     func(Entry)
+	OnError        func(error)
 }
 
 // Entry es un evento pendiente de envío.
 type Entry struct {
-	Level         string         `json:"level,omitempty"`
-	Message       string         `json:"message"`
-	Payload       any            `json:"payload,omitempty"`
-	Tags          []string       `json:"tags,omitempty"`
-	TraceID       string         `json:"traceId,omitempty"`
-	ApplicationID string         `json:"applicationId,omitempty"`
+	Level         string   `json:"level,omitempty"`
+	Message       string   `json:"message"`
+	Payload       any      `json:"payload,omitempty"`
+	Tags          []string `json:"tags,omitempty"`
+	TraceID       string   `json:"traceId,omitempty"`
+	ApplicationID string   `json:"applicationId,omitempty"`
 }
 
 // Result distingue creación (201) y descarte por transform (202).
