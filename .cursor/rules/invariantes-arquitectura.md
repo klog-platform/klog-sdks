@@ -1,0 +1,1 @@
+../../../docs/harness/rules/invariantes-arquitectura.md

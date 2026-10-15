@@ -1,0 +1,1 @@
+../../../docs/harness/rules/seguridad-e-identidad.md

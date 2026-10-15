@@ -1,0 +1,1 @@
+../../../docs/harness/rules/trazabilidad-y-reglas.md

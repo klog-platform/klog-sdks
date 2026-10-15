@@ -1,0 +1,1 @@
+../../../docs/harness/agents/klog-coordinador.md

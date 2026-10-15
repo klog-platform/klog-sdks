@@ -1,0 +1,1 @@
+../../../docs/harness/rules/operacion-arnes.md

@@ -18,8 +18,33 @@ El pipeline de git está en `.github/workflows/ci.yml`. No publica paquetes.
 | `java/` | Artefacto Maven `io.klog:klog-sdk` |
 | `esp/` | Biblioteca C/C++ para ESP32 (Arduino y ESP-IDF) |
 
+## Agentes de Feature Relacionados
+
+| Feature | Agente | Foco Principal |
+|---------|--------|----------------|
+| SDKs | `klog-sdks` | Implementación y verificación de los 6 clientes en Turborepo |
+| Ingesta | `klog-ingesta` | Contrato OpenAPI (`../api/openapi/ingest.yaml`) y códigos HTTP |
+| IoT | `klog-iot` | Biblioteca de ESP32 y formato de telemetría |
+
+## Skills
+
+| Acción | Skill |
+|--------|-------|
+| Desarrollar, probar o alinear un cliente SDK | `klog-feature-sdks` |
+| Consultar o alinear contrato OpenAPI de ingesta | `klog-feature-ingesta` |
+| Desarrollar o probar biblioteca ESP32 | `klog-feature-iot` |
+| Principios de cliente y arquitectura | `klog-arquitectura` |
+| Gestionar backlog Jira (`KL`) y docs Confluence (`KLOG`) | `klog-atlassian` |
+| Publicar gráficos en Confluence y Jira (Mermaid CLI PNG 2x) | `klog-diagramas-confluence` |
+| Sincronizar Confluence/Jira ↔ Repositorio y backup local | `klog-sincronizacion-atlassian` |
+
+```bash
+python3 ../docs/harness/sync.py
+```
+
 ## Invariantes
 
+- Fuente de verdad viva y operativa: Confluence `KLOG` y Jira `KL`. El repositorio `../docs` actúa como respaldo (backup).
 - Solo ingesta REST. GraphQL y la consola no viven aquí.
 - Identificadores públicos UUIDv7; API token `klog_…`.
 - 201 creado / 202 dropped; sin reintentos en 400/401/403.
