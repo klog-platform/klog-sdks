@@ -21,3 +21,5 @@ Variables: `KLOG_URL`, `KLOG_TENANT_ID`, `KLOG_TOKEN`, `KLOG_APPLICATION_ID`.
 - Reintentos en red, `429`, `502`–`504`.
 - No reintenta `400`/`401`/`403`.
 - Usa cURL (extensión `curl` de PHP).
+
+Docs: [Índice SDK](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk) · [README del monorepo](../README.md).

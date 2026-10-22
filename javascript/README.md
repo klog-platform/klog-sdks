@@ -52,8 +52,9 @@ Node ≥18. `@klog/sdk-core`, `@klog/sdk-node` y `@klog/sdk-web` son workspaces 
 Versión actual **0.1.0** (pre-1.0). Paquetes `private` hasta el primer release
 en npm. Orden de publicación previsto: core → node → web.
 
-Documentación completa: [wiki SDK](../../docs/wiki/sdk/README.md) (quickstarts,
-esquema, reintentos, CORS, rotación).
+Documentación completa (Confluence): [Índice — sdk](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk)
+(quickstarts, esquema, reintentos, CORS, rotación). Respaldo Git:
+[`docs/wiki/sdk/`](../../docs/wiki/sdk/README.md).
 
 ## Seguridad
 
@@ -64,4 +65,5 @@ esquema, reintentos, CORS, rotación).
 
 ## Contrato
 
-OpenAPI: [`../api/openapi/ingest.yaml`](../api/openapi/ingest.yaml).
+OpenAPI (repo `api`): [`../../api/openapi/ingest.yaml`](../../api/openapi/ingest.yaml).
+Especificación legible: [Contrato Ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1146902/Contrato+Ingesta).

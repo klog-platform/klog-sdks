@@ -35,11 +35,18 @@ Hace falta Node 22 (sirve 18+), Go 1.22, Python 3.10, PHP 8.1, Java 17 y gcc. Py
 - Reintentar red, `429` y `502`–`504` con backoff.
 - Nunca registrar el secreto del token.
 
-Cada SDK documenta su arranque en su `README.md`. La wiki vive en [`docs/wiki/sdk/`](../docs/wiki/sdk/).
+Cada SDK documenta su arranque en su `README.md`.
 
-Documentación de flujos y features:
+## Documentación oficial
 
-- [Arquitectura y flujos](../docs/wiki/sdk/arquitectura-y-flujos.md)
-- [Features por lenguaje](../docs/wiki/sdk/features-por-lenguaje.md)
-- [Vista de sistema](../docs/wiki/arquitectura/vista-sistema.md)
-- Entrada numerada: [13-sdks-e-ingesta.md](../docs/13-sdks-e-ingesta.md)
+Fuente operativa: Confluence **KLOG**. El repo `../docs` es el respaldo en Git.
+
+| Tema | Confluence | Repo (backup / local) |
+|------|------------|------------------------|
+| Índice SDK | [Índice — sdk](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk) | [`docs/wiki/sdk/`](../docs/wiki/sdk/) |
+| Arquitectura y flujos | [Arquitectura Y Flujos](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1179649/Arquitectura+Y+Flujos) | [`arquitectura-y-flujos.md`](../docs/wiki/sdk/arquitectura-y-flujos.md) |
+| Features por lenguaje | [Features Por Lenguaje](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/950314/Features+Por+Lenguaje) | [`features-por-lenguaje.md`](../docs/wiki/sdk/features-por-lenguaje.md) |
+| Contrato ingesta | [Contrato Ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1146902/Contrato+Ingesta) | OpenAPI en `api`: [`../api/openapi/ingest.yaml`](../api/openapi/ingest.yaml) |
+| SDKs e ingesta | [13-sdks-e-ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/65891/13-sdks-e-ingesta) | [`docs/13-sdks-e-ingesta.md`](../docs/13-sdks-e-ingesta.md) |
+| Vista de sistema | [Vista Sistema](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/589831/Vista+Sistema) | [`vista-sistema.md`](../docs/wiki/arquitectura/vista-sistema.md) |
+| Mapa Atlassian | — | [`docs/atlassian-sync.md`](../docs/atlassian-sync.md) |

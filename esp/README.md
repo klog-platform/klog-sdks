@@ -48,3 +48,5 @@ klog_info("sensor", "{\"temp\":22.5}");
 - Reintentos en red/`429`/`502`–`504`; nunca en `400`/`401`/`403`
 
 El `payload` se pasa como string JSON (el dispositivo construye el objeto).
+
+Docs: [Índice SDK](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk) · [Mqtt Bridge / IoT](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1081345/Mqtt+Bridge) · [README del monorepo](../README.md).
