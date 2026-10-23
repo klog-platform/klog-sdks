@@ -1,14 +1,14 @@
 {
   "name": "@kriverdevice/klog-core",
   "version": "0.1.0",
-  "description": "Núcleo y validación de esquemas del SDK de ingesta kLog",
+  "description": "Shared schemas, queue, retries and HTTP transport for kLog ingest SDKs",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kriverdevice/klog-sdks.git",
+    "url": "https://github.com/klog-platform/klog-sdks.git",
     "directory": "javascript/packages/core"
   },
-  "homepage": "https://klog.krisskira.com/docs/sdks",
+  "homepage": "https://klog.krisskira.com/docs/sdks?lang=en",
   "publishConfig": {
     "access": "public"
   },
@@ -36,5 +36,19 @@
   "devDependencies": {
     "typescript": "^5.8.3",
     "vitest": "^5.0.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/klog-platform/klog-sdks/issues"
+  },
+  "keywords": [
+    "klog",
+    "telemetry",
+    "observability",
+    "logging",
+    "ingest",
+    "sdk",
+    "events",
+    "validation",
+    "zod"
+  ]
 }

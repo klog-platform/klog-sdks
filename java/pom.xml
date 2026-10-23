@@ -9,7 +9,7 @@
   <version>0.1.0</version>
   <name>klog-sdk</name>
   <description>Cliente oficial de ingesta REST para kLog en Java</description>
-  <url>https://klog.krisskira.com/docs/sdks</url>
+  <url>https://klog.krisskira.com/docs/sdks?lang=en</url>
 
   <licenses>
     <license>
@@ -29,16 +29,16 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/kriverdevice/klog-sdks.git</connection>
-    <developerConnection>scm:git:ssh://github.com:kriverdevice/klog-sdks.git</developerConnection>
-    <url>https://github.com/kriverdevice/klog-sdks</url>
+    <connection>scm:git:git://github.com/klog-platform/klog-sdks.git</connection>
+    <developerConnection>scm:git:ssh://github.com:klog-platform/klog-sdks.git</developerConnection>
+    <url>https://github.com/klog-platform/klog-sdks</url>
   </scm>
 
   <distributionManagement>
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/kriverdevice/klog-sdks</url>
+      <url>https://maven.pkg.github.com/klog-platform/klog-sdks</url>
     </repository>
   </distributionManagement>
 

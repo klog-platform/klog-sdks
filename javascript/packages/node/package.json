@@ -1,20 +1,24 @@
 {
   "name": "@kriverdevice/klog-node",
   "version": "0.1.0",
-  "description": "Cliente Node.js oficial de ingesta REST para kLog",
+  "description": "Official Node.js REST ingest client for kLog",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kriverdevice/klog-sdks.git",
+    "url": "https://github.com/klog-platform/klog-sdks.git",
     "directory": "javascript/packages/node"
   },
-  "homepage": "https://klog.krisskira.com/docs/sdks",
+  "homepage": "https://klog.krisskira.com/docs/sdks?lang=en",
   "keywords": [
     "klog",
     "telemetry",
-    "logging",
     "observability",
-    "sdk"
+    "logging",
+    "ingest",
+    "sdk",
+    "events",
+    "nodejs",
+    "backend"
   ],
   "publishConfig": {
     "access": "public"
@@ -48,5 +52,8 @@
     "@types/node": "^26.6.4",
     "typescript": "^5.8.3",
     "vitest": "^5.0.3"
+  },
+  "bugs": {
+    "url": "https://github.com/klog-platform/klog-sdks/issues"
   }
 }

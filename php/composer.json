@@ -3,8 +3,17 @@
   "description": "Cliente oficial de ingesta REST para kLog en PHP",
   "type": "library",
   "license": "Apache-2.0",
-  "homepage": "https://klog.krisskira.com/docs/sdks",
-  "keywords": ["klog", "telemetry", "logging", "observability", "sdk"],
+  "homepage": "https://klog.krisskira.com/docs/sdks?lang=en",
+  "keywords": [
+    "klog",
+    "telemetry",
+    "logging",
+    "observability",
+    "sdk",
+    "ingest",
+    "events",
+    "php"
+  ],
   "authors": [
     {
       "name": "kLog",
@@ -12,8 +21,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/kriverdevice/klog-sdks/issues",
-    "source": "https://github.com/kriverdevice/klog-sdks"
+    "issues": "https://github.com/klog-platform/klog-sdks/issues",
+    "source": "https://github.com/klog-platform/klog-sdks"
   },
   "require": {
     "php": ">=8.1"

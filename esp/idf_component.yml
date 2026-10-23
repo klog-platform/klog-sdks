@@ -1,8 +1,8 @@
 name: klog
 version: 0.1.0
 description: Cliente de ingesta REST de kLog para ESP32 (ESP-IDF)
-url: https://github.com/kriverdevice/klog-sdks
-repository: https://github.com/kriverdevice/klog-sdks
+url: https://github.com/klog-platform/klog-sdks
+repository: https://github.com/klog-platform/klog-sdks
 documentation: https://klog.krisskira.com/docs/sdks
 targets:
   - esp32

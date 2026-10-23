@@ -1,103 +1,101 @@
-# kLog SDKs — Monorepo Oficial de Ingesta
+# kLog SDKs
 
-[![CI](https://github.com/kriverdevice/klog-sdks/actions/workflows/ci.yml/badge.svg)](https://github.com/kriverdevice/klog-sdks/actions/workflows/ci.yml)
-[![Deploy](https://github.com/kriverdevice/klog-sdks/actions/workflows/deploy.yml/badge.svg)](https://github.com/kriverdevice/klog-sdks/actions/workflows/deploy.yml)
+[![CI](https://github.com/klog-platform/klog-sdks/actions/workflows/ci.yml/badge.svg)](https://github.com/klog-platform/klog-sdks/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-klog.krisskira.com%2Fdocs%2Fsdks-success.svg)](https://klog.krisskira.com/docs/sdks)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
 
-Clientes oficiales para la ingesta REST de telemetría y eventos (`POST /v1/ingest/{tenantId}/events`) en la plataforma **kLog**.
+Official **REST ingest** clients for [kLog](https://klog.krisskira.com/docs/intro?lang=en).  
+Also available in Spanish: [README.es.md](README.es.md)
 
-- **Organización:** [`kriverdevice`](https://github.com/kriverdevice) (npm scope `@kriverdevice`)
-- **Team / producto:** `klog`
-- Monorepo unificado con **Turborepo**. Cada ecosistema conserva sus herramientas nativas; la raíz orquesta `lint`, `test` y `build`.
+Every client sends events to `POST /v1/ingest/{tenantId}/events` with a project API token (`Authorization: Bearer klog_<prefix>_<secret>`).
 
----
+| | |
+|---|---|
+| **Docs** | [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en) |
+| **OpenAPI** | [Interactive](https://klog.krisskira.com/docs/ingest-api) · [YAML](https://klog.krisskira.com/openapi/ingest.yaml) · [JSON](https://klog.krisskira.com/openapi/ingest.json) |
+| **Repository** | [github.com/klog-platform/klog-sdks](https://github.com/klog-platform/klog-sdks) |
 
-## Matriz de SDKs y gestores
+npm packages use the `@kriverdevice` scope; this repository lives under the `klog-platform` GitHub organization.
 
-| Lenguaje / Runtime | Paquete oficial | Gestor | Instalación (prod) | Staging |
-|---|---|---|---|---|
-| **Node.js (22.12+)** | [`@kriverdevice/klog-node`](javascript/packages/node) | npm | `npm install @kriverdevice/klog-node` | `@beta` |
-| **Web / Browser** | [`@kriverdevice/klog-web`](javascript/packages/web) | npm | `npm install @kriverdevice/klog-web` | `@beta` |
-| **Go (1.22+)** | [`github.com/kriverdevice/klog-sdks/go`](go/) | Go Modules | `go get github.com/kriverdevice/klog-sdks/go@latest` | tag `stg` |
-| **Python (3.10+)** | [`klog-sdk`](python/) | PyPI | `pip install klog-sdk` | TestPyPI |
-| **PHP (8.1+)** | [`kriverdevice/klog-sdk-php`](php/) | Packagist | `composer require kriverdevice/klog-sdk-php` | `dev-stg` |
-| **Java (17+)** | [`com.kriverdevice:klog-sdk`](java/) | Maven / GH Packages | ver README Java | GitHub Packages |
-| **ESP32 (IoT)** | [`klog`](esp/) | Arduino / ESP-IDF | [Releases (.zip)](https://github.com/kriverdevice/klog-sdks/releases) | Artifact ZIP en CI |
+## Official clients
 
----
+| Runtime | Package | Guide |
+|---|---|---|
+| **Node.js** | [`@kriverdevice/klog-node`](https://www.npmjs.com/package/@kriverdevice/klog-node) | [javascript/README.md](javascript/README.md) |
+| **Browser / Web** | [`@kriverdevice/klog-web`](https://www.npmjs.com/package/@kriverdevice/klog-web) | [javascript/README.md](javascript/README.md#browser--frameworks) |
+| **Go** | `github.com/klog-platform/klog-sdks/go` | [go/README.md](go/README.md) |
+| **Python** | [`klog-sdk`](https://pypi.org/project/klog-sdk/) | [python/README.md](python/README.md) |
+| **PHP** | [`kriverdevice/klog-sdk-php`](https://packagist.org/packages/kriverdevice/klog-sdk-php) | [php/README.md](php/README.md) |
+| **Java** | `com.kriverdevice:klog-sdk` | [java/README.md](java/README.md) |
+| **ESP32** | `klog` (Arduino / ESP-IDF) | [esp/README.md](esp/README.md) |
 
-## Contrato homogéneo de ingesta
+Shared contract: **201** stored · **202** dropped by filter transform · retry on network / `429` / `502`–`504` · **no retry** on `400` / `401` / `403`.
 
-1. **Protocolo:** REST HTTP/HTTPS hacia `POST /v1/ingest/{tenantId}/events`.
-2. **Autenticación:** `Authorization: Bearer klog_<prefix>_<secret>`.
-3. **No bloqueante por defecto:** búfer circular en memoria con vaciado asíncrono.
-4. **Respuestas:** `201 Created` (persistido) · `202 Accepted` (descartado por transform/`filter`).
-5. **Reintentos:** red, `429`, `502`–`504`. **Sin reintento** en `400` / `401` / `403`.
-6. **Seguridad:** el secreto del token no va a logs ni al cuerpo del evento. En browser, preferir proxy same-origin.
-
----
-
-## Desarrollo en el monorepo
-
-### Requisitos
-
-- Node.js ≥ 22.12
-- Go ≥ 1.22
-- Python ≥ 3.10
-- PHP ≥ 8.1 con extensión `curl`
-- Java JDK ≥ 17 y Apache Maven
-- GCC / Make (pruebas host ESP32)
-
-### Instalación y verificación
+### Quick install
 
 ```bash
-npm install
-npm run check   # lint + test + build (6 lenguajes)
+npm install @kriverdevice/klog-node          # or @kriverdevice/klog-web
+go get github.com/klog-platform/klog-sdks/go@latest
+pip install klog-sdk
+composer require kriverdevice/klog-sdk-php
 ```
+
+Configure `KLOG_URL`, `KLOG_TENANT_ID`, `KLOG_TOKEN`, and `KLOG_APPLICATION_ID` (or the language-specific config fields).  
+Base URLs: `https://klog-api.krisskira.com` (prod) · `https://klog-api-staging.krisskira.com` (staging) · `http://localhost:3100` (local).
+
+## Other clients (HTTP)
+
+You can call the ingest API from any HTTP stack. Examples below are **not** official SDKs.
+
+### curl
 
 ```bash
-npm run lint
-npm run test
-npm run build
+curl -sS -X POST "$KLOG_URL/v1/ingest/$KLOG_TENANT_ID/events" \
+  -H "Authorization: Bearer $KLOG_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "applicationId": "'"$KLOG_APPLICATION_ID"'",
+    "level": "info",
+    "message": "hello from curl"
+  }'
 ```
 
-Filtros Turborepo:
+### Android (Kotlin)
 
-```bash
-npx turbo run test --filter=@kriverdevice/klog-node
-npx turbo run test --filter=@kriverdevice/klog-sdk-python
-npx turbo run test --filter=@kriverdevice/klog-sdk-go
+```kotlin
+val body = """{"applicationId":"$appId","level":"info","message":"hello from android"}"""
+val req = Request.Builder()
+  .url("$baseUrl/v1/ingest/$tenantId/events")
+  .addHeader("Authorization", "Bearer $token")
+  .addHeader("Content-Type", "application/json")
+  .post(body.toRequestBody("application/json".toMediaType()))
+  .build()
+client.newCall(req).execute().use { /* 201 or 202 = success */ }
 ```
 
----
+### Swift
 
-## Flujos de Git y release
+```swift
+var request = URLRequest(url: URL(string: "\(baseUrl)/v1/ingest/\(tenantId)/events")!)
+request.httpMethod = "POST"
+request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+request.httpBody = try JSONSerialization.data(withJSONObject: [
+  "applicationId": applicationId,
+  "level": "info",
+  "message": "hello from ios",
+])
+let (_, response) = try await URLSession.shared.data(for: request)
+// Treat HTTP 201 and 202 as success
+```
 
-- **`ci.yml`:** lint/test/build en PRs y pushes; **no publica**.
-- **`deploy.yml`:** publica a registries (stg → beta/TestPyPI; prod → tags `v*.*.*` / `sdk-*-v*.*.*`).
+## Source layout
 
-### Staging (`stg`)
-
-Push a `stg` o `workflow_dispatch` con `environment: stg`.
-
-### Producción
-
-Tag semántico en historia de `prod`, o dispatch con `environment: prod`.
-
----
-
-## Dominios canónicos
-
-- **Portal / docs SDKs:** `https://klog.krisskira.com/docs/sdks`
-- **API (prod):** `https://klog-api.krisskira.com`
-- **API (staging):** `https://klog-api-staging.krisskira.com`
-- **Local:** `http://localhost:3100`
-
----
-
-## Enlaces
-
-- Manual público: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
-- Contrato OpenAPI: [openapi/ingest.yaml](https://github.com/kriverdevice/klog-api/blob/main/openapi/ingest.yaml)
-- Confluence KLOG: [Índice SDK](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk)
+```
+javascript/   @kriverdevice/klog-core · klog-node · klog-web
+go/           Go module
+python/       klog-sdk (import klog_sdk)
+php/          kriverdevice/klog-sdk-php
+java/         com.kriverdevice:klog-sdk
+esp/          Arduino + ESP-IDF
+```

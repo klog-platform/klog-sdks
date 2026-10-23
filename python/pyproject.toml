@@ -23,10 +23,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://klog.krisskira.com/docs/sdks"
-Documentation = "https://klog.krisskira.com/docs/sdks"
-Repository = "https://github.com/kriverdevice/klog-sdks"
-"Issue Tracker" = "https://github.com/kriverdevice/klog-sdks/issues"
+Homepage = "https://klog.krisskira.com/docs/sdks?lang=en"
+Documentation = "https://klog.krisskira.com/docs/sdks?lang=en"
+Repository = "https://github.com/klog-platform/klog-sdks"
+"Issue Tracker" = "https://github.com/klog-platform/klog-sdks/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.11"]

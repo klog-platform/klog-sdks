@@ -9,6 +9,6 @@ go build ./...
 
 La raíz del repo también corre `lint` (`gofmt` y `go vet`), `test` y `build` con `npm run check`.
 
-Módulo: `github.com/kriverdevice/klog-sdks/go`. Solo envía eventos; no usa GraphQL.
+Módulo: `github.com/klog-platform/klog-sdks/go`. Solo envía eventos; no usa GraphQL.
 
 Responder en español.

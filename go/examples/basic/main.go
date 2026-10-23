@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	klog "github.com/kriverdevice/klog-sdks/go"
+	klog "github.com/klog-platform/klog-sdks/go"
 )
 
 func main() {

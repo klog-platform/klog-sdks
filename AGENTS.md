@@ -13,7 +13,7 @@ npm run check
 | Carpeta | Qué es |
 |---------|--------|
 | `javascript/` | `@kriverdevice/klog-core`, `@kriverdevice/klog-node`, `@kriverdevice/klog-web` |
-| `go/` | Módulo `github.com/kriverdevice/klog-sdks/go` |
+| `go/` | Módulo `github.com/klog-platform/klog-sdks/go` |
 | `python/` | PyPI `klog-sdk` (import `klog_sdk`) |
 | `php/` | Composer `kriverdevice/klog-sdk-php` |
 | `java/` | Maven `com.kriverdevice:klog-sdk` |

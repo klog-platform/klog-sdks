@@ -239,7 +239,7 @@ jobs:
         if: needs.meta.outputs.is_prod == 'true' && needs.meta.outputs.dry_run != 'true'
         run: |
           TAG="${{ needs.meta.outputs.tag }}"
-          MODULE="github.com/kriverdevice/klog-sdks/go"
+          MODULE="github.com/klog-platform/klog-sdks/go"
           echo "Notificando a proxy.golang.org para ${MODULE}@${TAG}..."
           GOPROXY=https://proxy.golang.org go list -m "${MODULE}@${TAG}" || echo "Go proxy precargará el módulo cuando el tag sea público."
 
@@ -277,7 +277,7 @@ jobs:
             echo "Notificando webhook a Packagist..."
             curl -s -XPOST -H'Content-Type: application/json' \
               "https://packagist.org/api/update-package?username=${PACKAGIST_USER}&apiToken=${PACKAGIST_TOKEN}" \
-              -d '{"repository":{"url":"https://github.com/kriverdevice/klog-sdks"}}'
+              -d '{"repository":{"url":"https://github.com/klog-platform/klog-sdks"}}'
           else
             echo "Packagist sincronizará automáticamente el paquete kriverdevice/klog-sdk-php mediante integración de webhook GitHub."
           fi
@@ -318,7 +318,7 @@ jobs:
             echo "[Simulación / Dry-run] mvn deploy simulado para com.kriverdevice:klog-sdk"
           else
             mvn -B -DskipTests deploy \
-              -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/kriverdevice/klog-sdks
+              -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/klog-platform/klog-sdks
           fi
 
   publish-esp:
@@ -408,7 +408,7 @@ jobs:
           ### Ecosistemas y paquetes disponibles
           - **JavaScript / TypeScript**: \`@kriverdevice/klog-node\` y \`@kriverdevice/klog-web\` en [npm](https://www.npmjs.com/package/@kriverdevice/klog-node).
           - **Python**: \`klog-sdk\` en [PyPI](https://pypi.org/project/klog-sdk/).
-          - **Go**: \`github.com/kriverdevice/klog-sdks/go\` vía \`go get\` y [Go Module Proxy](https://proxy.golang.org).
+          - **Go**: \`github.com/klog-platform/klog-sdks/go\` vía \`go get\` y [Go Module Proxy](https://proxy.golang.org).
           - **PHP**: \`kriverdevice/klog-sdk-php\` en [Packagist](https://packagist.org/packages/kriverdevice/klog-sdk-php).
           - **Java**: \`com.kriverdevice:klog-sdk\` en GitHub Packages.
           - **ESP32 (IoT)**: Archivo descargable adjunto para Arduino IDE y ESP-IDF.
