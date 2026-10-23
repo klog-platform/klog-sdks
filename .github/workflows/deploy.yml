@@ -128,7 +128,7 @@ jobs:
           fi
 
   publish-javascript:
-    name: Publicar JavaScript (npm / GH Packages)
+    name: Publicar JavaScript (npm OIDC / Trusted Publishing)
     needs: [quality, meta, release-guard]
     if: >-
       always()
@@ -137,31 +137,43 @@ jobs:
       && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
       && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'javascript')
     runs-on: ubuntu-latest
+    # Debe coincidir con el "Environment" del Trusted Publisher en npmjs.com (stg | prod).
     environment: ${{ needs.meta.outputs.env_name }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
+      # Node 24 + npm ≥11.5.1: OIDC trusted publishing sin NPM_TOKEN.
       - uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+      - name: Asegurar npm con soporte OIDC
+        run: |
+          set -euo pipefail
+          npm install -g npm@latest
+          npm --version
+          node --version
       - name: Instalar dependencias y compilar
         run: |
           npm ci
           npx turbo run build --filter=@kriverdevice/klog-core --filter=@kriverdevice/klog-node --filter=@kriverdevice/klog-web
       - name: Publicar paquetes JavaScript
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DIST_TAG: ${{ needs.meta.outputs.dist_tag }}
           DRY_RUN: ${{ needs.meta.outputs.dry_run }}
+          # Solo si existe un token legado; no usar GITHUB_TOKEN (rompe el fallback OIDC).
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          echo "==> Publicando paquetes JavaScript con dist-tag: ${DIST_TAG}"
+          echo "==> Publicando paquetes JavaScript con dist-tag: ${DIST_TAG} (OIDC trusted publishing)"
           PACKAGES=("javascript/packages/core" "javascript/packages/node" "javascript/packages/web")
 
           for pkg in "${PACKAGES[@]}"; do
             echo "--> Procesando ${pkg}"
-            if [ "${DRY_RUN}" = "true" ] || [ -z "${NPM_TOKEN:-}" ]; then
+            if [ "${DRY_RUN}" = "true" ]; then
               echo "[Simulación / Dry-run] npm publish --workspace ${pkg} --access public --tag ${DIST_TAG}"
               npm publish --workspace "${pkg}" --access public --tag "${DIST_TAG}" --dry-run
             else
