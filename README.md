@@ -39,14 +39,14 @@ Cada SDK documenta su arranque en su `README.md`.
 
 ## Documentación oficial
 
-Fuente operativa: Confluence **KLOG**. El repo `../docs` es el respaldo en Git.
+Fuente operativa: Confluence **KLOG**. El repo `docs` es respaldo Git. Enlaces cross-repo van a Confluence/GitHub (no a `../docs` ni `../api`).
 
-| Tema | Confluence | Repo (backup / local) |
-|------|------------|------------------------|
-| Índice SDK | [Índice — sdk](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk) | [`docs/wiki/sdk/`](../docs/wiki/sdk/) |
-| Arquitectura y flujos | [Arquitectura Y Flujos](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1179649/Arquitectura+Y+Flujos) | [`arquitectura-y-flujos.md`](../docs/wiki/sdk/arquitectura-y-flujos.md) |
-| Features por lenguaje | [Features Por Lenguaje](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/950314/Features+Por+Lenguaje) | [`features-por-lenguaje.md`](../docs/wiki/sdk/features-por-lenguaje.md) |
-| Contrato ingesta | [Contrato Ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1146902/Contrato+Ingesta) | OpenAPI en `api`: [`../api/openapi/ingest.yaml`](../api/openapi/ingest.yaml) |
-| SDKs e ingesta | [13-sdks-e-ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/65891/13-sdks-e-ingesta) | [`docs/13-sdks-e-ingesta.md`](../docs/13-sdks-e-ingesta.md) |
-| Vista de sistema | [Vista Sistema](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/589831/Vista+Sistema) | [`vista-sistema.md`](../docs/wiki/arquitectura/vista-sistema.md) |
-| Mapa Atlassian | — | [`docs/atlassian-sync.md`](../docs/atlassian-sync.md) |
+| Tema | Enlace |
+|------|--------|
+| Índice SDK | [Índice — sdk](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/327689/ndice+sdk) |
+| Arquitectura y flujos | [Arquitectura Y Flujos](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1179649/Arquitectura+Y+Flujos) |
+| Features por lenguaje | [Features Por Lenguaje](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/950314/Features+Por+Lenguaje) |
+| Contrato ingesta | [Contrato Ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/1146902/Contrato+Ingesta) · [OpenAPI (`api`)](https://github.com/krisskira/klog-api/blob/main/openapi/ingest.yaml) |
+| SDKs e ingesta | [13-sdks-e-ingesta](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/65891/13-sdks-e-ingesta) |
+| Vista de sistema | [Vista Sistema](https://krisskira.atlassian.net/wiki/spaces/KLOG/pages/589831/Vista+Sistema) |
+| Mapa Atlassian | [atlassian-sync.md](https://github.com/krisskira/klog-project/blob/main/atlassian-sync.md) |
