@@ -26,11 +26,13 @@ npm run check
 | SDKs | `klog-sdks` | Los 6 clientes en Turborepo |
 | Ingesta | `klog-ingesta` | Contrato OpenAPI y códigos HTTP |
 | IoT | `klog-iot` | ESP32 y telemetría |
+| Code review local | `klog-code-review` | Diff vs `main`, checks y veredicto 🔴/🟡/🟢 |
 
 ## Skills
 
 | Acción | Skill |
 |--------|-------|
+| Revisar cambios locales (diff, tests, lint) | `klog-code-review` |
 | Desarrollar o alinear un cliente | `klog-feature-sdks` |
 | Contrato OpenAPI de ingesta | `klog-feature-ingesta` |
 | Biblioteca ESP32 | `klog-feature-iot` |
