@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-go",
+  "name": "@kriverdevice/klog-sdk-go",
   "private": true,
   "version": "0.1.0",
   "scripts": {

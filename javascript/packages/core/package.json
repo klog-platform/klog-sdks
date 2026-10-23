@@ -1,7 +1,20 @@
 {
-  "name": "@klog/sdk-core",
+  "name": "@kriverdevice/klog-core",
   "version": "0.1.0",
-  "private": true,
+  "description": "Núcleo y validación de esquemas del SDK de ingesta kLog",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kriverdevice/klog-sdks.git",
+    "directory": "javascript/packages/core"
+  },
+  "homepage": "https://klog.krisskira.com/docs/sdks",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

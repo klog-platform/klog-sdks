@@ -1,55 +1,55 @@
 # SDKs kLog
 
-Esta carpeta es un monorepo Turborepo: los seis clientes viven aquí y la raíz orquesta `lint`, `test` y `build`. Cada lenguaje conserva su herramienta (`tsc`, `go`, `pytest`, `composer`, `mvn`, `make`).
+Monorepo Turborepo de clientes de ingesta. Org GitHub/npm: **`kriverdevice`**. Team/producto: **`klog`**.
 
 ```bash
 npm install
 npm run check
 ```
 
-El pipeline de git está en `.github/workflows/ci.yml`. No publica paquetes.
+- **CI** (`.github/workflows/ci.yml`): lint + test + build; **no publica**.
+- **Deploy** (`.github/workflows/deploy.yml`): publica a npm, PyPI, Go proxy, Packagist, GH Packages, releases ESP.
 
 | Carpeta | Qué es |
 |---------|--------|
-| `javascript/` | Workspaces npm: core, `@klog/sdk-node`, `@klog/sdk-web` |
-| `go/` | Módulo Go `klog/sdk-go` |
-| `python/` | Paquete `klog-sdk` |
-| `php/` | Paquete Composer `klog/sdk-php` |
-| `java/` | Artefacto Maven `io.klog:klog-sdk` |
-| `esp/` | Biblioteca C/C++ para ESP32 (Arduino y ESP-IDF) |
+| `javascript/` | `@kriverdevice/klog-core`, `@kriverdevice/klog-node`, `@kriverdevice/klog-web` |
+| `go/` | Módulo `github.com/kriverdevice/klog-sdks/go` |
+| `python/` | PyPI `klog-sdk` (import `klog_sdk`) |
+| `php/` | Composer `kriverdevice/klog-sdk-php` |
+| `java/` | Maven `com.kriverdevice:klog-sdk` |
+| `esp/` | Biblioteca C/C++ ESP32 (Arduino + ESP-IDF) |
 
-## Agentes de Feature Relacionados
+## Agentes de feature
 
-| Feature | Agente | Foco Principal |
-|---------|--------|----------------|
-| SDKs | `klog-sdks` | Implementación y verificación de los 6 clientes en Turborepo |
-| Ingesta | `klog-ingesta` | Contrato OpenAPI (`../api/openapi/ingest.yaml`) y códigos HTTP |
-| IoT | `klog-iot` | Biblioteca de ESP32 y formato de telemetría |
+| Feature | Agente | Foco |
+|---------|--------|------|
+| SDKs | `klog-sdks` | Los 6 clientes en Turborepo |
+| Ingesta | `klog-ingesta` | Contrato OpenAPI y códigos HTTP |
+| IoT | `klog-iot` | ESP32 y telemetría |
 
 ## Skills
 
 | Acción | Skill |
 |--------|-------|
-| Desarrollar, probar o alinear un cliente SDK | `klog-feature-sdks` |
-| Consultar o alinear contrato OpenAPI de ingesta | `klog-feature-ingesta` |
-| Desarrollar o probar biblioteca ESP32 | `klog-feature-iot` |
-| Principios de cliente y arquitectura | `klog-arquitectura` |
-| Gestionar backlog Jira (`KL`) y docs Confluence (`KLOG`) | `klog-atlassian` |
-| Publicar gráficos en Confluence y Jira (Mermaid CLI PNG 2x) | `klog-diagramas-confluence` |
-| Sincronizar Confluence/Jira ↔ Repositorio y backup local | `klog-sincronizacion-atlassian` |
+| Desarrollar o alinear un cliente | `klog-feature-sdks` |
+| Contrato OpenAPI de ingesta | `klog-feature-ingesta` |
+| Biblioteca ESP32 | `klog-feature-iot` |
+| Arquitectura | `klog-arquitectura` |
+| Jira / Confluence | `klog-atlassian` |
+| Diagramas | `klog-diagramas-confluence` |
+| Sync Atlassian | `klog-sincronizacion-atlassian` |
 
-```bash
-python3 ../docs/harness/sync.py
-```
+En workspace local polyrepo: `python3 ../docs/harness/sync.py`. En clone standalone del repo GitHub, el arnés vive en el repo hermano `klog-docs`.
 
 ## Invariantes
 
-- Fuente de verdad viva y operativa: Confluence `KLOG` y Jira `KL`. El repositorio `../docs` actúa como respaldo (backup).
-- Solo ingesta REST. GraphQL y la consola no viven aquí.
-- Identificadores públicos UUIDv7; API token `klog_…`.
-- 201 creado / 202 dropped; sin reintentos en 400/401/403.
-- El contrato HTTP está en `../api/openapi/ingest.yaml`. Cada SDK define sus propios tipos.
-- No reintroducir NATS, ClickHouse, una API en Node ni un RBAC de un solo rol.
+- Fuente de verdad operativa: Confluence `KLOG` y Jira `KL`. Backup: repo `docs`.
+- Solo ingesta REST. GraphQL y consola no viven aquí.
+- UUIDv7 públicos; API token `klog_…`.
+- `201` creado / `202` dropped; sin reintentos en `400`/`401`/`403`.
+- Contrato HTTP: [openapi/ingest.yaml](https://github.com/kriverdevice/klog-api/blob/main/openapi/ingest.yaml) (local: repo hermano `api/openapi/ingest.yaml`).
+- Dominios: docs `klog.krisskira.com` · API `klog-api.krisskira.com` · staging `klog-api-staging.krisskira.com`.
+- No reintroducir NATS, ClickHouse, API en Node ni RBAC de un solo rol.
 
 Al editar un SDK, seguir el `AGENTS.md` de esa subcarpeta.
 

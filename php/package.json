@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-php",
+  "name": "@kriverdevice/klog-sdk-php",
   "private": true,
   "version": "0.1.0",
   "scripts": {

@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-esp",
+  "name": "@kriverdevice/klog-sdk-esp",
   "private": true,
   "version": "0.1.0",
   "scripts": {

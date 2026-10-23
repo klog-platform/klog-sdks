@@ -1,6 +1,6 @@
 # Browser y proxy
 
-`@klog/sdk-web` añade el Bearer en el cliente. Eso implica:
+`@kriverdevice/klog-web` añade el Bearer en el cliente. Eso implica:
 
 1. Cualquiera puede leer el token del bundle.
 2. El origen de la SPA debe estar en `CORS_ORIGIN` de la API, o las peticiones fallan.

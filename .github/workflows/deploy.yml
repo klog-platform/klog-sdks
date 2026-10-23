@@ -1,0 +1,433 @@
+name: Deploy
+
+# - Automático: push a stg → staging (dist-tag beta, TestPyPI, GH Packages)
+#               tag v*.*.* o sdk-*-v*.*.* → producción (npm latest, PyPI, Go proxy, Maven, Packagist, ESP release)
+# - Manual: Actions → Deploy → Run workflow → elegir environment y/o SDK específico
+on:
+  push:
+    branches: [stg]
+    tags: ["v*.*.*", "sdk-*-v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Entorno de despliegue (stg o prod)'
+        required: true
+        default: 'stg'
+        type: choice
+        options:
+          - stg
+          - prod
+      sdk:
+        description: 'SDK a publicar (o all para todos)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - javascript
+          - go
+          - python
+          - php
+          - java
+          - esp
+      dry_run:
+        description: 'Ejecutar en modo simulación (dry-run) sin publicar en registries reales'
+        required: false
+        default: false
+        type: boolean
+      reason:
+        description: 'Motivo u observaciones del despliegue'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+concurrency:
+  group: klog-sdks-${{ github.ref_type == 'tag' && 'prod' || github.event.inputs.environment || 'stg' }}
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    name: Validar calidad monorepo
+    uses: ./.github/workflows/ci.yml
+
+  meta:
+    name: Determinar metadatos y entorno
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.resolve.outputs.env_name }}
+      tag: ${{ steps.resolve.outputs.tag }}
+      is_prod: ${{ steps.resolve.outputs.is_prod }}
+      dist_tag: ${{ steps.resolve.outputs.dist_tag }}
+      target_sdk: ${{ steps.resolve.outputs.target_sdk }}
+      dry_run: ${{ steps.resolve.outputs.dry_run }}
+    steps:
+      - id: resolve
+        env:
+          MANUAL_ENV: ${{ github.event.inputs.environment || '' }}
+          MANUAL_SDK: ${{ github.event.inputs.sdk || 'all' }}
+          MANUAL_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          MANUAL_REASON: ${{ github.event.inputs.reason || '' }}
+        run: |
+          set -euo pipefail
+          echo "==> Evento=${GITHUB_EVENT_NAME} RefType=${GITHUB_REF_TYPE} Ref=${GITHUB_REF_NAME} SHA=${GITHUB_SHA::7}"
+          if [ -n "${MANUAL_REASON}" ]; then
+            echo "==> Motivo manual: ${MANUAL_REASON}"
+          fi
+
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] || [ "${MANUAL_ENV}" = "prod" ]; then
+            ENV_NAME="prod"
+            TAG="${GITHUB_REF_NAME}"
+            IS_PROD="true"
+            DIST_TAG="latest"
+          else
+            ENV_NAME="stg"
+            TAG="stg-${GITHUB_SHA::7}"
+            IS_PROD="false"
+            DIST_TAG="beta"
+          fi
+
+          echo "env_name=${ENV_NAME}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "is_prod=${IS_PROD}" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=${DIST_TAG}" >> "$GITHUB_OUTPUT"
+          echo "target_sdk=${MANUAL_SDK}" >> "$GITHUB_OUTPUT"
+          echo "dry_run=${MANUAL_DRY_RUN}" >> "$GITHUB_OUTPUT"
+          echo "==> Resultado: env=${ENV_NAME} tag=${TAG} dist_tag=${DIST_TAG} sdk=${MANUAL_SDK} dry_run=${MANUAL_DRY_RUN}"
+
+  release-guard:
+    name: Verificación semántica de release prod
+    needs: [quality, meta]
+    if: needs.meta.outputs.is_prod == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Validar tag semántico y ancestría
+        run: |
+          set -euo pipefail
+          tag="${{ needs.meta.outputs.tag }}"
+          echo "Validando tag de release: ${tag}"
+          if ! [[ "$tag" =~ ^(v[0-9]+\.[0-9]+\.[0-9]+|sdk-[a-z0-9]+-v[0-9]+\.[0-9]+\.[0-9]+)$ ]] && [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            echo "::error::El tag ${tag} no cumple el formato semántico vX.Y.Z o sdk-<lang>-vX.Y.Z."
+            exit 1
+          fi
+
+          if git fetch origin prod 2>/dev/null; then
+            if ! git merge-base --is-ancestor HEAD origin/prod; then
+              echo "::error::El tag o commit tiene que pertenecer a la historia de la rama prod."
+              exit 1
+            fi
+            echo "Ancestría con origin/prod verificada correctamente."
+          else
+            echo "Rama remota prod no detectada; continuando con validación semántica."
+          fi
+
+  publish-javascript:
+    name: Publicar JavaScript (npm / GH Packages)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'javascript')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - name: Instalar dependencias y compilar
+        run: |
+          npm ci
+          npx turbo run build --filter=@kriverdevice/klog-core --filter=@kriverdevice/klog-node --filter=@kriverdevice/klog-web
+      - name: Publicar paquetes JavaScript
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DIST_TAG: ${{ needs.meta.outputs.dist_tag }}
+          DRY_RUN: ${{ needs.meta.outputs.dry_run }}
+        run: |
+          set -euo pipefail
+          echo "==> Publicando paquetes JavaScript con dist-tag: ${DIST_TAG}"
+          PACKAGES=("javascript/packages/core" "javascript/packages/node" "javascript/packages/web")
+
+          for pkg in "${PACKAGES[@]}"; do
+            echo "--> Procesando ${pkg}"
+            if [ "${DRY_RUN}" = "true" ] || [ -z "${NPM_TOKEN:-}" ]; then
+              echo "[Simulación / Dry-run] npm publish --workspace ${pkg} --access public --tag ${DIST_TAG}"
+              npm publish --workspace "${pkg}" --access public --tag "${DIST_TAG}" --dry-run
+            else
+              npm publish --workspace "${pkg}" --access public --tag "${DIST_TAG}"
+            fi
+          done
+
+  publish-python:
+    name: Publicar Python (PyPI / TestPyPI)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'python')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Instalar herramientas de empaquetado
+        working-directory: python
+        run: |
+          python -m pip install --upgrade pip build twine
+      - name: Construir paquete Python (sdist y wheel)
+        working-directory: python
+        run: |
+          python -m build
+          twine check dist/*
+      - name: Publicar paquete Python
+        working-directory: python
+        env:
+          TWINE_USERNAME: "__token__"
+          TWINE_PASSWORD: ${{ needs.meta.outputs.is_prod == 'true' && secrets.PYPI_TOKEN || secrets.TEST_PYPI_TOKEN || '' }}
+          DRY_RUN: ${{ needs.meta.outputs.dry_run }}
+          IS_PROD: ${{ needs.meta.outputs.is_prod }}
+        run: |
+          set -euo pipefail
+          if [ "${DRY_RUN}" = "true" ] || [ -z "${TWINE_PASSWORD}" ]; then
+            echo "[Simulación / Dry-run] Paquete Python verificado correctamente (dist/ listo para upload)."
+            ls -la dist/
+          elif [ "${IS_PROD}" = "true" ]; then
+            echo "Publicando a PyPI producción..."
+            twine upload dist/*
+          else
+            echo "Publicando a TestPyPI staging..."
+            twine upload --repository testpypi dist/*
+          fi
+
+  publish-go:
+    name: Distribuir Go (Proxy / Tag verification)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'go')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go/go.mod
+      - name: Validar compilación y tests del módulo Go
+        working-directory: go
+        run: |
+          go test -v ./...
+          go build -v ./...
+      - name: Notificar y precargar en Go Module Proxy (producción)
+        if: needs.meta.outputs.is_prod == 'true' && needs.meta.outputs.dry_run != 'true'
+        run: |
+          TAG="${{ needs.meta.outputs.tag }}"
+          MODULE="github.com/kriverdevice/klog-sdks/go"
+          echo "Notificando a proxy.golang.org para ${MODULE}@${TAG}..."
+          GOPROXY=https://proxy.golang.org go list -m "${MODULE}@${TAG}" || echo "Go proxy precargará el módulo cuando el tag sea público."
+
+  publish-php:
+    name: Distribuir PHP (Composer / Packagist)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'php')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: curl, json
+          coverage: none
+      - name: Validar manifiesto de Composer
+        working-directory: php
+        run: |
+          composer validate --strict
+          composer install --no-interaction --prefer-dist
+          composer test
+      - name: Notificar a Packagist (producción)
+        if: needs.meta.outputs.is_prod == 'true' && needs.meta.outputs.dry_run != 'true'
+        env:
+          PACKAGIST_USER: ${{ secrets.PACKAGIST_USER || '' }}
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN || '' }}
+        run: |
+          if [ -n "${PACKAGIST_USER}" ] && [ -n "${PACKAGIST_TOKEN}" ]; then
+            echo "Notificando webhook a Packagist..."
+            curl -s -XPOST -H'Content-Type: application/json' \
+              "https://packagist.org/api/update-package?username=${PACKAGIST_USER}&apiToken=${PACKAGIST_TOKEN}" \
+              -d '{"repository":{"url":"https://github.com/kriverdevice/klog-sdks"}}'
+          else
+            echo "Packagist sincronizará automáticamente el paquete kriverdevice/klog-sdk-php mediante integración de webhook GitHub."
+          fi
+
+  publish-java:
+    name: Publicar Java (Maven / GH Packages)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'java')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+      - name: Compilar y empaquetar artefacto Java
+        working-directory: java
+        run: |
+          mvn -B clean package
+      - name: Desplegar paquete Maven a GitHub Packages
+        working-directory: java
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ needs.meta.outputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ "${DRY_RUN}" = "true" ]; then
+            echo "[Simulación / Dry-run] mvn deploy simulado para com.kriverdevice:klog-sdk"
+          else
+            mvn -B -DskipTests deploy \
+              -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/kriverdevice/klog-sdks
+          fi
+
+  publish-esp:
+    name: Empaquetar ESP32 (Arduino / ESP-IDF)
+    needs: [quality, meta, release-guard]
+    if: >-
+      always()
+      && needs.quality.result == 'success'
+      && needs.meta.result == 'success'
+      && (needs.release-guard.result == 'success' || needs.release-guard.result == 'skipped')
+      && (needs.meta.outputs.target_sdk == 'all' || needs.meta.outputs.target_sdk == 'esp')
+    runs-on: ubuntu-latest
+    environment: ${{ needs.meta.outputs.env_name }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validar componentes ESP32
+        working-directory: esp
+        run: |
+          make -C test/host lint
+          make -C test/host test
+      - name: Generar paquete ZIP distribuible
+        run: |
+          TAG="${{ needs.meta.outputs.tag }}"
+          mkdir -p dist
+          ZIP_NAME="klog-esp32-${TAG}.zip"
+          cd esp
+          zip -r "../dist/${ZIP_NAME}" \
+            library.properties \
+            idf_component.yml \
+            CMakeLists.txt \
+            klog.h \
+            include/ \
+            src/ \
+            examples/ \
+            README.md
+          cd ..
+          echo "ZIP generado: dist/${ZIP_NAME}"
+          ls -lh dist/
+      - name: Subir artefacto ESP32 del workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: klog-esp32-${{ needs.meta.outputs.tag }}
+          path: dist/*.zip
+
+  github-release:
+    name: Crear / Actualizar GitHub Release
+    needs: [meta, publish-javascript, publish-python, publish-go, publish-php, publish-java, publish-esp]
+    if: >-
+      always()
+      && needs.meta.outputs.is_prod == 'true'
+      && needs.meta.outputs.dry_run != 'true'
+      && (needs.publish-javascript.result == 'success' || needs.publish-javascript.result == 'skipped')
+      && (needs.publish-python.result == 'success' || needs.publish-python.result == 'skipped')
+      && (needs.publish-go.result == 'success' || needs.publish-go.result == 'skipped')
+      && (needs.publish-php.result == 'success' || needs.publish-php.result == 'skipped')
+      && (needs.publish-java.result == 'success' || needs.publish-java.result == 'skipped')
+      && (needs.publish-esp.result == 'success' || needs.publish-esp.result == 'skipped')
+      && (
+        needs.publish-javascript.result == 'success'
+        || needs.publish-python.result == 'success'
+        || needs.publish-go.result == 'success'
+        || needs.publish-php.result == 'success'
+        || needs.publish-java.result == 'success'
+        || needs.publish-esp.result == 'success'
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Descargar artefactos ESP32
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: klog-esp32-*
+          path: dist/
+          merge-multiple: true
+      - name: Publicar GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.meta.outputs.tag }}
+        run: |
+          set -euo pipefail
+          echo "Creando GitHub Release para ${TAG}..."
+          RELEASE_BODY="## kLog SDKs Release ${TAG}
+
+          Clientes oficiales de ingesta REST para la plataforma kLog (org \`kriverdevice\`, team \`klog\`).
+
+          ### Ecosistemas y paquetes disponibles
+          - **JavaScript / TypeScript**: \`@kriverdevice/klog-node\` y \`@kriverdevice/klog-web\` en [npm](https://www.npmjs.com/package/@kriverdevice/klog-node).
+          - **Python**: \`klog-sdk\` en [PyPI](https://pypi.org/project/klog-sdk/).
+          - **Go**: \`github.com/kriverdevice/klog-sdks/go\` vía \`go get\` y [Go Module Proxy](https://proxy.golang.org).
+          - **PHP**: \`kriverdevice/klog-sdk-php\` en [Packagist](https://packagist.org/packages/kriverdevice/klog-sdk-php).
+          - **Java**: \`com.kriverdevice:klog-sdk\` en GitHub Packages.
+          - **ESP32 (IoT)**: Archivo descargable adjunto para Arduino IDE y ESP-IDF.
+
+          ### Documentación
+          - Portal: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
+          - API: \`https://klog-api.krisskira.com\`
+          - Contrato REST: [openapi/ingest.yaml](https://github.com/kriverdevice/klog-api/blob/main/openapi/ingest.yaml)"
+
+          ASSETS=()
+          if ls dist/*.zip >/dev/null 2>&1; then
+            ASSETS=(dist/*.zip)
+          fi
+
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "Release ${TAG} ya existe."
+          else
+            gh release create "${TAG}" "${ASSETS[@]}" \
+              --title "Release ${TAG}" \
+              --notes "${RELEASE_BODY}" \
+              --prerelease=false
+          fi

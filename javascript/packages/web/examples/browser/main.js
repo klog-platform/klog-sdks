@@ -1,4 +1,4 @@
-import { createClient } from "@klog/sdk-web";
+import { createClient } from "@kriverdevice/klog-web";
 
 /**
  * Same-origin: baseUrl apunta al prefijo proxied. El token del cliente es un placeholder;

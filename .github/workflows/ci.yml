@@ -1,8 +1,9 @@
 name: ci
 
 on:
+  workflow_call:
   push:
-    branches: [main, master]
+    branches: [main, master, stg, prod]
   pull_request:
 
 concurrency:
@@ -26,28 +27,28 @@ jobs:
         include:
           - name: javascript
             runtime: node
-            filters: --filter=@klog/sdk-core --filter=@klog/sdk-node --filter=@klog/sdk-web
+            filters: --filter=@kriverdevice/klog-core --filter=@kriverdevice/klog-node --filter=@kriverdevice/klog-web
           - name: go
             runtime: go
-            filters: --filter=@klog/sdk-go
+            filters: --filter=@kriverdevice/klog-sdk-go
           - name: python
             runtime: python
-            filters: --filter=@klog/sdk-python
+            filters: --filter=@kriverdevice/klog-sdk-python
           - name: php
             runtime: php
-            filters: --filter=@klog/sdk-php
+            filters: --filter=@kriverdevice/klog-sdk-php
           - name: java
             runtime: java
-            filters: --filter=@klog/sdk-java
+            filters: --filter=@kriverdevice/klog-sdk-java
           - name: esp
             runtime: esp
-            filters: --filter=@klog/sdk-esp
+            filters: --filter=@kriverdevice/klog-sdk-esp
     steps:
       - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v7
         with:
-          node-version: "24"
+          node-version: "22"
           cache: npm
 
       - uses: actions/setup-go@v7

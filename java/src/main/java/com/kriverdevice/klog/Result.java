@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 public final class Result {
   public final boolean created;

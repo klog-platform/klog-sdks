@@ -1,7 +1,27 @@
 {
-  "name": "@klog/sdk-node",
+  "name": "@kriverdevice/klog-node",
   "version": "0.1.0",
-  "description": "Cliente Node de ingesta kLog",
+  "description": "Cliente Node.js oficial de ingesta REST para kLog",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kriverdevice/klog-sdks.git",
+    "directory": "javascript/packages/node"
+  },
+  "homepage": "https://klog.krisskira.com/docs/sdks",
+  "keywords": [
+    "klog",
+    "telemetry",
+    "logging",
+    "observability",
+    "sdk"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,10 +39,10 @@
     "example": "node examples/basic.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12.0"
   },
   "dependencies": {
-    "@klog/sdk-core": "0.1.0"
+    "@kriverdevice/klog-core": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",

@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 import java.io.IOException;
 import java.net.URI;

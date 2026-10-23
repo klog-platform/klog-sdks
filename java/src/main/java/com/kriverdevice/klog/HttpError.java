@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 public final class HttpError extends RuntimeException {
   public final int status;

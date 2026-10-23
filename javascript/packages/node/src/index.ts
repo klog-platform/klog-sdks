@@ -4,9 +4,9 @@ import {
   type ClientConfig,
   type CreateClientOptions,
   type FetchLike,
-} from "@klog/sdk-core";
+} from "@kriverdevice/klog-core";
 
-export * from "@klog/sdk-core";
+export * from "@kriverdevice/klog-core";
 
 export type NodeClientOptions = CreateClientOptions & {
   /** fetch inyectable (p. ej. undici); por defecto globalThis.fetch. */

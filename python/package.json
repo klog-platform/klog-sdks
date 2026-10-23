@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-python",
+  "name": "@kriverdevice/klog-sdk-python",
   "private": true,
   "version": "0.1.0",
   "scripts": {

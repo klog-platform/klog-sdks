@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 import java.util.Collection;
 import java.util.Iterator;

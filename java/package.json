@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-java",
+  "name": "@kriverdevice/klog-sdk-java",
   "private": true,
   "version": "0.1.0",
   "scripts": {

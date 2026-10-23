@@ -4,9 +4,9 @@ import {
   type ClientConfig,
   type CreateClientOptions,
   type FetchLike,
-} from "@klog/sdk-core";
+} from "@kriverdevice/klog-core";
 
-export * from "@klog/sdk-core";
+export * from "@kriverdevice/klog-core";
 
 export type WebClientOptions = CreateClientOptions & {
   fetchImpl?: FetchLike;
@@ -25,7 +25,7 @@ export function createClient(options: WebClientOptions): KlogIngestClient {
   const { transport, fetchImpl, flushOnUnload = true, ...config } = options;
   if (typeof console !== "undefined") {
     console.warn(
-      "[@klog/sdk-web] El API token queda expuesto en el navegador. Usa un proxy same-origin en producción.",
+      "[@kriverdevice/klog-web] El API token queda expuesto en el navegador. Usa un proxy same-origin en producción.",
     );
   }
   const http =

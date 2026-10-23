@@ -9,23 +9,23 @@
       "dependsOn": ["lint", "^build"],
       "outputs": ["dist/**"]
     },
-    "@klog/sdk-java#build": {
+    "@kriverdevice/klog-sdk-java#build": {
       "dependsOn": ["lint", "^build"],
       "outputs": ["target/**"]
     },
-    "@klog/sdk-esp#build": {
+    "@kriverdevice/klog-sdk-esp#build": {
       "dependsOn": ["lint", "^build"],
       "outputs": ["test/host/klog.o"]
     },
-    "@klog/sdk-go#build": {
+    "@kriverdevice/klog-sdk-go#build": {
       "dependsOn": ["lint", "^build"],
       "outputs": []
     },
-    "@klog/sdk-php#build": {
+    "@kriverdevice/klog-sdk-php#build": {
       "dependsOn": ["lint", "^build"],
       "outputs": []
     },
-    "@klog/sdk-python#build": {
+    "@kriverdevice/klog-sdk-python#build": {
       "dependsOn": ["lint", "^build"],
       "outputs": []
     },

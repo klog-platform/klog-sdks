@@ -9,8 +9,24 @@ description = "Cliente de ingesta REST para kLog"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
-authors = [{ name = "kLog" }]
+authors = [{ name = "kLog", email = "soporte@krisskira.com" }]
 dependencies = []
+keywords = ["klog", "telemetry", "logging", "observability", "sdk"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://klog.krisskira.com/docs/sdks"
+Documentation = "https://klog.krisskira.com/docs/sdks"
+Repository = "https://github.com/kriverdevice/klog-sdks"
+"Issue Tracker" = "https://github.com/kriverdevice/klog-sdks/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.11"]

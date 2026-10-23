@@ -1,5 +1,5 @@
 {
-  "name": "@klog/sdk-web-example-browser",
+  "name": "@kriverdevice/klog-web-example-browser",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@klog/sdk-web": "file:../.."
+    "@kriverdevice/klog-web": "file:../.."
   },
   "devDependencies": {
     "vite": "^6.3.5"

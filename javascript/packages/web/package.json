@@ -1,7 +1,28 @@
 {
-  "name": "@klog/sdk-web",
+  "name": "@kriverdevice/klog-web",
   "version": "0.1.0",
-  "description": "Cliente browser de ingesta kLog",
+  "description": "Cliente web/navegador oficial de ingesta REST para kLog",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kriverdevice/klog-sdks.git",
+    "directory": "javascript/packages/web"
+  },
+  "homepage": "https://klog.krisskira.com/docs/sdks",
+  "keywords": [
+    "klog",
+    "telemetry",
+    "logging",
+    "observability",
+    "sdk",
+    "browser"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,7 +39,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@klog/sdk-core": "0.1.0"
+    "@kriverdevice/klog-core": "0.1.0"
   },
   "devDependencies": {
     "typescript": "^5.8.3",

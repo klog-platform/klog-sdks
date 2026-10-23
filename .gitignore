@@ -2,3 +2,31 @@ node_modules/
 .turbo/
 .DS_Store
 *.log
+
+# Python
+python/.venv/
+**/.venv/
+**/__pycache__/
+**/*.egg-info/
+python/dist/
+python/build/
+
+# Java
+java/target/
+**/target/
+
+# PHP
+php/vendor/
+.phpunit.result.cache
+
+# JS build
+javascript/packages/*/dist/
+
+# ESP host artifacts
+esp/test/host/test_klog
+esp/test/host/test_klog.lint
+esp/test/host/*.o
+esp/test/host/*.d
+
+# Deploy / local dist
+dist/

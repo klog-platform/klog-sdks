@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.AfterEach;

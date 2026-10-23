@@ -1,5 +1,5 @@
-import io.klog.Client;
-import io.klog.Result;
+import com.kriverdevice.klog.Client;
+import com.kriverdevice.klog.Result;
 
 import java.util.Map;
 

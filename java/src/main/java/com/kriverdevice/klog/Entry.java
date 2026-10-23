@@ -1,4 +1,4 @@
-package io.klog;
+package com.kriverdevice.klog;
 
 import java.util.List;
 import java.util.Map;
