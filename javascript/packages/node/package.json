@@ -1,6 +1,6 @@
 {
   "name": "@kriverdevice/klog-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official Node.js REST ingest client for kLog",
   "license": "Apache-2.0",
   "repository": {
