@@ -2,7 +2,7 @@
 
 [![npm node](https://img.shields.io/npm/v/@kriverdevice/klog-node.svg?label=@kriverdevice/klog-node)](https://www.npmjs.com/package/@kriverdevice/klog-node)
 [![npm web](https://img.shields.io/npm/v/@kriverdevice/klog-web.svg?label=@kriverdevice/klog-web)](https://www.npmjs.com/package/@kriverdevice/klog-web)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Official ingest clients for **Node.js** and the **browser**.  
 Español: [README.es.md](README.es.md)
@@ -13,7 +13,7 @@ Español: [README.es.md](README.es.md)
 | `@kriverdevice/klog-web` | Browsers (prefer a same-origin proxy in production) |
 | `@kriverdevice/klog-core` | Shared queue / retries / validation (dependency) |
 
-- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en)
+- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
 - Source: [github.com/klog-platform/klog-sdks/tree/main/javascript](https://github.com/klog-platform/klog-sdks/tree/main/javascript)
 - OpenAPI: [docs/ingest-api](https://klog.krisskira.com/docs/ingest-api)
 

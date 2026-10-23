@@ -1,7 +1,7 @@
 # kLog SDK for PHP
 
 [![Packagist](https://img.shields.io/packagist/v/kriverdevice/klog-sdk-php.svg)](https://packagist.org/packages/kriverdevice/klog-sdk-php)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Official REST ingest client for PHP 8.1+ (cURL).  
 Español: [README.es.md](README.es.md)
@@ -27,6 +27,6 @@ $client->close();
 
 Use from Laravel controllers/jobs, Symfony services, or WordPress plugins — not from Blade with a leaked token.
 
-- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en)
+- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
 - Source: [tree/main/php](https://github.com/klog-platform/klog-sdks/tree/main/php)
 - OpenAPI: [docs/ingest-api](https://klog.krisskira.com/docs/ingest-api)

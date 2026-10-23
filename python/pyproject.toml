@@ -23,8 +23,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://klog.krisskira.com/docs/sdks?lang=en"
-Documentation = "https://klog.krisskira.com/docs/sdks?lang=en"
+Homepage = "https://klog.krisskira.com/docs/sdks"
+Documentation = "https://klog.krisskira.com/docs/sdks"
 Repository = "https://github.com/klog-platform/klog-sdks"
 "Issue Tracker" = "https://github.com/klog-platform/klog-sdks/issues"
 

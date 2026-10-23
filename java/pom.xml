@@ -9,7 +9,7 @@
   <version>0.1.0</version>
   <name>klog-sdk</name>
   <description>Cliente oficial de ingesta REST para kLog en Java</description>
-  <url>https://klog.krisskira.com/docs/sdks?lang=en</url>
+  <url>https://klog.krisskira.com/docs/sdks</url>
 
   <licenses>
     <license>

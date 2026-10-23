@@ -1,7 +1,7 @@
 # SDK ESP32 kLog
 
 [![ESP32](https://img.shields.io/badge/architecture-ESP32-blue.svg)](https://www.espressif.com/)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=es)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Biblioteca C/C++ oficial de ingesta REST para **Arduino** y **ESP-IDF**.  
 English: [README.md](README.md)
@@ -23,4 +23,4 @@ klog_flush(client);
 klog_client_destroy(client);
 ```
 
-Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=es) · Código: [tree/main/esp](https://github.com/klog-platform/klog-sdks/tree/main/esp)
+Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks) · Código: [tree/main/esp](https://github.com/klog-platform/klog-sdks/tree/main/esp)
