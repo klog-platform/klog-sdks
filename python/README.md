@@ -1,12 +1,12 @@
 # kLog SDK for Python
 
 [![PyPI](https://img.shields.io/pypi/v/klog-sdk.svg)](https://pypi.org/project/klog-sdk/)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Official REST ingest client for Python 3.10+ (`urllib` only).  
 Español: [README.es.md](README.es.md)
 
-- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en)
+- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
 - Source: [tree/main/python](https://github.com/klog-platform/klog-sdks/tree/main/python)
 - OpenAPI: [docs/ingest-api](https://klog.krisskira.com/docs/ingest-api)
 

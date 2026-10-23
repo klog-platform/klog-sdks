@@ -5,10 +5,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/klog-platform/klog-sdks.git",
+    "url": "git+https://github.com/klog-platform/klog-sdks.git",
     "directory": "javascript/packages/node"
   },
-  "homepage": "https://klog.krisskira.com/docs/sdks?lang=en",
+  "homepage": "https://klog.krisskira.com/docs/sdks",
   "keywords": [
     "klog",
     "telemetry",

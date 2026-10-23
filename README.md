@@ -2,16 +2,16 @@
 
 [![CI](https://github.com/klog-platform/klog-sdks/actions/workflows/ci.yml/badge.svg)](https://github.com/klog-platform/klog-sdks/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
-Official **REST ingest** clients for [kLog](https://klog.krisskira.com/docs/intro?lang=en).  
+Official **REST ingest** clients for [kLog](https://klog.krisskira.com/docs/intro).  
 Also available in Spanish: [README.es.md](README.es.md)
 
 Every client sends events to `POST /v1/ingest/{tenantId}/events` with a project API token (`Authorization: Bearer klog_<prefix>_<secret>`).
 
 | | |
 |---|---|
-| **Docs** | [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en) |
+| **Docs** | [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks) |
 | **OpenAPI** | [Interactive](https://klog.krisskira.com/docs/ingest-api) · [YAML](https://klog.krisskira.com/openapi/ingest.yaml) · [JSON](https://klog.krisskira.com/openapi/ingest.json) |
 | **Repository** | [github.com/klog-platform/klog-sdks](https://github.com/klog-platform/klog-sdks) |
 

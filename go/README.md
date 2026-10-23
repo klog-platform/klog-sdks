@@ -2,12 +2,12 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/klog-platform/klog-sdks/go.svg)](https://pkg.go.dev/github.com/klog-platform/klog-sdks/go)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](../LICENSE)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Official REST ingest client for Go 1.22+.  
 Español: [README.es.md](README.es.md)
 
-- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en)
+- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
 - Source: [github.com/klog-platform/klog-sdks/tree/main/go](https://github.com/klog-platform/klog-sdks/tree/main/go)
 - OpenAPI: [docs/ingest-api](https://klog.krisskira.com/docs/ingest-api)
 

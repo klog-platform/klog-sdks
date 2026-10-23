@@ -1,7 +1,7 @@
 # kLog SDK for Java
 
 [![GitHub Packages](https://img.shields.io/badge/GitHub%20Packages-com.kriverdevice:klog--sdk-blue.svg)](https://github.com/klog-platform/klog-sdks/packages)
-[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks?lang=en)
+[![Docs](https://img.shields.io/badge/docs-klog.krisskira.com-success.svg)](https://klog.krisskira.com/docs/sdks)
 
 Official REST ingest client for Java 17+ (`java.net.http`).  
 Español: [README.es.md](README.es.md)
@@ -32,6 +32,6 @@ client.flush();
 client.close();
 ```
 
-- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks?lang=en)
+- Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks)
 - Source: [tree/main/java](https://github.com/klog-platform/klog-sdks/tree/main/java)
 - OpenAPI: [docs/ingest-api](https://klog.krisskira.com/docs/ingest-api)
