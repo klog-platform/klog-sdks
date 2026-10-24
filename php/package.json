@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "lint": "find src tests examples -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "test": "composer test",
-    "build": "composer validate --strict --no-check-publish"
+    "test": "composer -d .. test",
+    "build": "composer -d .. validate --strict --no-check-publish"
   }
 }

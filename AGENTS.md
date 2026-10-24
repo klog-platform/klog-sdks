@@ -9,6 +9,7 @@ npm run check
 
 - **CI** (`.github/workflows/ci.yml`): lint + test + build; **no publica**.
 - **Deploy** (`.github/workflows/deploy.yml`): publica a npm, PyPI, Go proxy, Packagist, GH Packages, releases ESP.
+- **PHP / Packagist**: `composer.json` en la raíz del monorepo (autoload `php/src`); dist filtrado con `.gitattributes`. Versiones Packagist solo con tags `vX.Y.Z`.
 
 | Carpeta | Qué es |
 |---------|--------|
