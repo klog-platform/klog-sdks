@@ -85,7 +85,6 @@ jobs:
 
       - name: Instalar dependencias PHP
         if: matrix.runtime == 'php'
-        working-directory: php
         run: composer install --no-interaction --prefer-dist
 
       - name: Lint, test y build

@@ -4,6 +4,7 @@
   "type": "library",
   "license": "Apache-2.0",
   "homepage": "https://klog.krisskira.com/docs/sdks",
+  "readme": "php/README.md",
   "keywords": [
     "klog",
     "telemetry",
@@ -17,7 +18,7 @@
   "authors": [
     {
       "name": "kLog",
-      "email": "soporte@krisskira.com"
+      "email": "krisskira@gmail.com"
     }
   ],
   "support": {
@@ -32,15 +33,15 @@
   },
   "autoload": {
     "psr-4": {
-      "Klog\\": "src/"
+      "Klog\\": "php/src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Klog\\Tests\\": "tests/"
+      "Klog\\Tests\\": "php/tests/"
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit"
+    "test": "vendor/bin/phpunit -c php/phpunit.xml"
   }
 }

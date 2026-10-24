@@ -15,7 +15,8 @@ python/build/
 java/target/
 **/target/
 
-# PHP
+# PHP / Composer (manifiesto en la raíz del monorepo)
+/vendor/
 php/vendor/
 .phpunit.result.cache
 

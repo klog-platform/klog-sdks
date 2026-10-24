@@ -274,7 +274,6 @@ jobs:
           extensions: curl, json
           coverage: none
       - name: Validar manifiesto de Composer
-        working-directory: php
         run: |
           composer validate --strict
           composer install --no-interaction --prefer-dist

@@ -1,0 +1,33 @@
+# Dist Packagist: solo PHP SDK + manifiestos (git archive / GitHub zipball).
+# Paths anclados a la raíz del repo para no afectar php/README.md etc.
+
+/javascript/ export-ignore
+/go/ export-ignore
+/python/ export-ignore
+/java/ export-ignore
+/esp/ export-ignore
+
+/node_modules/ export-ignore
+/.turbo/ export-ignore
+/.github/ export-ignore
+/.agents/ export-ignore
+/.cursor/ export-ignore
+/.vscode/ export-ignore
+
+/package.json export-ignore
+/package-lock.json export-ignore
+/turbo.json export-ignore
+/README.md export-ignore
+/README.es.md export-ignore
+/AGENTS.md export-ignore
+/.cursorrules export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.npmrc export-ignore
+
+/php/package.json export-ignore
+/php/AGENTS.md export-ignore
+/php/.turbo/ export-ignore
+/php/vendor/ export-ignore
+/php/.phpunit.result.cache export-ignore
+/php/.gitignore export-ignore

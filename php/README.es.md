@@ -25,4 +25,6 @@ $client->flush();
 $client->close();
 ```
 
-Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks) · Código: [tree/main/php](https://github.com/klog-platform/klog-sdks/tree/main/php)
+Docs: [klog.krisskira.com/docs/sdks](https://klog.krisskira.com/docs/sdks) · Código: [tree/main/php](https://github.com/klog-platform/klog-sdks/tree/main/php) (`composer.json` en la raíz del monorepo para Packagist)
+
+Versiones Packagist: solo tags `vX.Y.Z` (no `sdk-php-v*`).
